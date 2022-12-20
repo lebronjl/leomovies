@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../../context";
 import { SectionKeys } from "../../models/section-keys";
 import { SectionFavourites } from "../section-favourites";
 import { SectionSearch } from "../section-search";
 import { SectionWatchLater } from "../section-watch-later";
 import styles from "./index.module.css";
 
-interface IProps {
-  activeSectionKey: SectionKeys;
-}
-
-export const SectionsSwitch: React.FC<IProps> = ({ activeSectionKey }) => {
+export const SectionsSwitch: React.FC = () => {
+  const { state } = useContext(AppContext);
+  
   const renderContent = () => {
-    switch (activeSectionKey) {
+    switch (state.activeSectionKey) {
       case SectionKeys.Search:
         return <SectionSearch />;
       case SectionKeys.Favourites:

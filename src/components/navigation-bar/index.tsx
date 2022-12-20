@@ -1,18 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../../context";
 import { SectionKeys } from "../../models/section-keys";
 import styles from "./index.module.css";
 
-interface IProps {
-  activeSectionKey: SectionKeys;
-  onSectionSelected: (sectionKey: SectionKeys) => void;
-}
-
-export const NavigationBar: React.FC<IProps> = ({
-  activeSectionKey,
-  onSectionSelected,
-}) => {
+export const NavigationBar: React.FC = () => {
+  const { state, dispatch } = useContext(AppContext);
+  
   const setSection = (sectionKey: SectionKeys) => {
-    onSectionSelected(sectionKey);
+    dispatch({ type: "SET_ACTIVE_SECTION", payload: sectionKey });
   };
 
   const sections: { text: string; key: SectionKeys }[] = [
@@ -34,7 +29,7 @@ export const NavigationBar: React.FC<IProps> = ({
     <nav role="navigation" className={styles.navbar}>
       <ul role="tablist" className={styles.navbarList}>
         {sections.map((section, index) => {
-          const isSelected = activeSectionKey === section.key;
+          const isSelected = state.activeSectionKey === section.key;
           return (
             <li
               key={index}

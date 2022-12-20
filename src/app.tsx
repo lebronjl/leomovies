@@ -1,20 +1,15 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import { NavigationBar } from "./components/navigation-bar";
 import { SectionsSwitch } from "./components/sections-switch";
-import { SectionKeys } from "./models/section-keys";
+import { AppContext, contextReducer, initialAppContext } from "./context";
 
 export const App: React.FC = () => {
-  const [activeSectionKey, setActiveSectionKey] = useState(SectionKeys.Search);
+  const [state, dispatch] = useReducer(contextReducer, initialAppContext);
 
   return (
-    <>
-      <NavigationBar
-        activeSectionKey={activeSectionKey}
-        onSectionSelected={(sectionKey: SectionKeys) => {
-          setActiveSectionKey(sectionKey);
-        }}
-      />
-      <SectionsSwitch activeSectionKey={activeSectionKey} />
-    </>
+    <AppContext.Provider value={{ state, dispatch }}>
+      <NavigationBar />
+      <SectionsSwitch />
+    </AppContext.Provider>
   );
 };
