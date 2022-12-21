@@ -36,11 +36,13 @@ const customRender = (
 };
 
 const customRenderHook = (
-  callback: (props: {}) => any,
+  callback: (props: any) => any,
   contextData: IAppContext = initialAppContext,
-  dispatchMock = jest.fn()
+  dispatchMock = jest.fn(),
+  options?: any
 ) => {
   return renderHook(callback, {
+    ...options,
     wrapper: getProvidersWrapper(contextData, dispatchMock),
   });
 };

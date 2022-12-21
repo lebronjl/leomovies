@@ -11,7 +11,7 @@ describe("SectionsSwitch", () => {
     [SectionKeys.WatchLater, "Watch later"],
   ])(
     "should render the appropiate section when activeSectionKey is %s",
-    (activeSectionKey: SectionKeys, text: string) => {
+    (activeSectionKey: SectionKeys, text: string) => {      
       render(<SectionsSwitch />, { ...initialAppContext, activeSectionKey });
 
       expect(screen.getByRole("grid")).toHaveTextContent(text);

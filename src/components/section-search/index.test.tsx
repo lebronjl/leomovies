@@ -1,10 +1,17 @@
 import { render, screen } from "../../test-utils/render";
 import React from "react";
 import { SectionSearch } from ".";
-import * as customHook from "./use-search-movies";
+import * as useSearchMoviesHook from "./use-search-movies";
+import * as useIsElementVisibleHook from "./use-is-element-visible";
 import { IMovie } from "../../models/movie";
 
 describe("SectionSearch", () => {
+  beforeEach(() => {
+    jest
+      .spyOn(useIsElementVisibleHook, "useIsElementVisible")
+      .mockReturnValue(false);
+  });
+
   it("renders the section", () => {
     render(<SectionSearch />);
 
@@ -20,7 +27,7 @@ describe("SectionSearch", () => {
       },
       { id: 2, title: "Movie2" },
     ];
-    jest.spyOn(customHook, "useSearchMovies").mockReturnValue(movies);
+    jest.spyOn(useSearchMoviesHook, "useSearchMovies").mockReturnValue(movies);
 
     render(<SectionSearch />);
 

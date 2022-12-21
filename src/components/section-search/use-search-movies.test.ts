@@ -14,8 +14,9 @@ describe("useSearchMovies", () => {
     results: [
       { id: 1, title: "Movie 1" },
       { id: 1, title: "Movie 1" },
+      { id: 2, title: "Movie 2" },
     ] as IMovieResponse[],
-    total_pages: 1,
+    total_pages: 2,
     total_results: 2,
   };
 
@@ -27,7 +28,7 @@ describe("useSearchMovies", () => {
     jest.spyOn(global, "fetch").mockImplementation();
 
     await act(async () => {
-      renderHook(() => useSearchMovies());
+      renderHook(() => useSearchMovies(false));
     });
 
     expect(global.fetch).not.toBeCalled();
@@ -43,10 +44,10 @@ describe("useSearchMovies", () => {
       );
     const expectedResult: IMovie[] = [
       { id: 1, title: "Movie 1" },
-      { id: 1, title: "Movie 1" },
+      { id: 2, title: "Movie 2" },
     ];
 
-    const { result } = renderHook(() => useSearchMovies(), {
+    const { result } = renderHook(() => useSearchMovies(false), {
       ...initialAppContext,
       query: "any-query",
     });
@@ -54,6 +55,37 @@ describe("useSearchMovies", () => {
     expect(global.fetch).toBeCalled();
     await waitFor(() => {
       expect(result.current).toMatchObject(expectedResult);
+    });
+  });
+
+  it("should fetch the second page if the end of the page is reached", async () => {
+    const jsonMock1 = jest.fn(() =>
+      Promise.resolve({ json: () => Promise.resolve(response) })
+    ) as unknown as jest.Mock;
+    const jsonMock2 = jest.fn(() =>
+      Promise.resolve({ json: () => Promise.resolve({ ...response, page: 2 }) })
+    ) as unknown as jest.Mock;
+
+    jest
+      .spyOn(global, "fetch")
+      .mockImplementationOnce(jsonMock1)
+      .mockImplementationOnce(jsonMock2);
+
+    const { rerender } = renderHook(
+      (hasReachedEndOfPage: boolean) => useSearchMovies(hasReachedEndOfPage),
+      {
+        ...initialAppContext,
+        query: "any-query",
+      },
+      jest.fn(),
+      {
+        initialProps: false,
+      }
+    );
+
+    rerender(true);
+    await waitFor(() => {
+      expect(global.fetch).toBeCalledTimes(2);
     });
   });
 });
