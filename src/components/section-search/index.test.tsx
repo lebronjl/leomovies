@@ -4,6 +4,8 @@ import { SectionSearch } from ".";
 import * as useSearchMoviesHook from "./use-search-movies";
 import * as useIsElementVisibleHook from "./use-is-element-visible";
 import { IMovie } from "../../models/movie";
+import userEvent from "@testing-library/user-event";
+import { initialAppContext } from "../../context";
 
 describe("SectionSearch", () => {
   beforeEach(() => {
@@ -35,5 +37,21 @@ describe("SectionSearch", () => {
     expect(listItems.length).toBe(2);
     expect(listItems[0]).toHaveTextContent(movies[0].title);
     expect(listItems[1]).toHaveTextContent(movies[1].title);
+  });
+
+  it("dispatches the SET_QUERY action when the search form is submitted", async () => {
+    const user = userEvent.setup();
+    jest.spyOn(global, "fetch").mockImplementation();
+    const dispatchMock = jest.fn();
+
+    render(<SectionSearch />, initialAppContext, dispatchMock);
+
+    await user.type(screen.getByRole("search"), "test-query");
+    await user.click(screen.getByRole("button"));
+
+    expect(dispatchMock).toBeCalledWith({
+      type: "SET_QUERY",
+      payload: "test-query",
+    });
   });
 });
