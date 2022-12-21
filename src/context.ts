@@ -4,6 +4,7 @@ import { SectionKeys } from "./models/section-keys";
 
 export const initialAppContext: IAppContext = {
   activeSectionKey: SectionKeys.Search,
+  query: "",
 };
 
 export const AppContext = createContext<{
@@ -14,10 +15,12 @@ export const AppContext = createContext<{
   dispatch: () => null,
 });
 
-type AppAction = {
-  type: "SET_ACTIVE_SECTION";
-  payload: SectionKeys;
-};
+type AppAction =
+  | {
+      type: "SET_ACTIVE_SECTION";
+      payload: SectionKeys;
+    }
+  | { type: "SET_QUERY"; payload: string };
 
 export const contextReducer = (
   state: IAppContext,
@@ -28,6 +31,12 @@ export const contextReducer = (
       return {
         ...state,
         activeSectionKey: action.payload,
+      };
+    }
+    case "SET_QUERY": {
+      return {
+        ...state,
+        query: action.payload,
       };
     }
     default:

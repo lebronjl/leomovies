@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.form {
+    display: flex;
+    position: relative;
+    width: fit-content;
+}
+
+.input {
+    border-radius: 5px 0 0 5px;
+    border-color: var(--color-dark-grey);
+    background-color: var(--color-light-grey);
+    margin-right: 80px;
+    padding: 5px 10px;
+    font-size: 18px;
+    color: var(--color-dark-grey);
+}
+
+.button {
+    position: absolute;
+    right: 0;
+    border-radius: 0 5px 5px 0;
+    border-color: var(--color-dark-grey);
+    padding: 5px 10px;
+    font-size: 18px;
+    background-color: var(--color-light-grey);
+    color: var(--color-dark-grey);
+}
