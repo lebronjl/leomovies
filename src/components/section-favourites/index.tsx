@@ -7,7 +7,10 @@ export const SectionFavourites: React.FC = () => {
 
   return (
     <section role="grid" data-testid="section-favourites">
-      <MoviesList movies={state.favouriteMovies} />
+      <MoviesList
+        movies={state.favouriteMovies}
+        emptyListMessage="The list is empty. There are a lot of lovely movies, just add them from any movies list!"
+      />
     </section>
   );
 };

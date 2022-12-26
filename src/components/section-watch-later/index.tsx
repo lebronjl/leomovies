@@ -7,7 +7,10 @@ export const SectionWatchLater: React.FC = () => {
 
   return (
     <section role="grid" data-testid="section-watchlater">
-      <MoviesList movies={state.watchLaterMovies} />
+      <MoviesList
+        movies={state.watchLaterMovies}
+        emptyListMessage="The list is empty. Plan your movie marathon by adding them with the watch later button"
+      />
     </section>
   );
 };

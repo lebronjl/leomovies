@@ -44,7 +44,11 @@ export const SectionSearch: React.FC = () => {
           </button>
         </form>
       </div>
-      <MoviesList movies={movies} />
+      <MoviesList
+        movies={movies}
+        noDataMessage="Enter a search criteria to start searching for movies!"
+        emptyListMessage="No results found"
+      />
       <div ref={lastElementRef}></div>
     </section>
   );
