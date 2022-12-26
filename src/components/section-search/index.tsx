@@ -19,7 +19,7 @@ export const SectionSearch: React.FC = () => {
   }, [state.query]);
 
   return (
-    <section role="grid">
+    <section role="grid" data-testid="section-search">
       <div className={styles.container}>
         <form
           className={styles.form}

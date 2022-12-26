@@ -6,15 +6,15 @@ import { initialAppContext } from "../../context";
 
 describe("SectionsSwitch", () => {
   it.each([
-    [SectionKeys.Search, "Search"],
-    [SectionKeys.Favourites, "Favourites"],
-    [SectionKeys.WatchLater, "Watch later"],
+    [SectionKeys.Search, "section-search"],
+    [SectionKeys.Favourites, "section-favourites"],
+    [SectionKeys.WatchLater, "section-watchlater"],
   ])(
     "should render the appropiate section when activeSectionKey is %s",
-    (activeSectionKey: SectionKeys, text: string) => {      
+    (activeSectionKey: SectionKeys, dataTestId: string) => {
       render(<SectionsSwitch />, { ...initialAppContext, activeSectionKey });
 
-      expect(screen.getByRole("grid")).toHaveTextContent(text);
+      expect(screen.getByTestId(dataTestId)).toBeInTheDocument();
     }
   );
 });
