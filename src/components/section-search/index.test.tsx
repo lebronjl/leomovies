@@ -23,11 +23,8 @@ describe("SectionSearch", () => {
 
   it("renders the movies in a list when the search hook returns items", () => {
     const movies: IMovie[] = [
-      {
-        id: 1,
-        title: "Movie1",
-      },
-      { id: 2, title: "Movie2" },
+      { id: 1, title: "Movie1", posterPath: "posterMovie1.png" },
+      { id: 2, title: "Movie2", posterPath: "posterMovie2.png" },
     ];
     jest.spyOn(useSearchMoviesHook, "useSearchMovies").mockReturnValue(movies);
 

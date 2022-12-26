@@ -1,5 +1,7 @@
 import React from "react";
 import { IMovie } from "../../models/movie";
+import { MovieCard } from "../movie-card";
+import styles from "./index.module.css";
 
 interface IProps {
   movies?: IMovie[];
@@ -7,9 +9,9 @@ interface IProps {
 
 export const MoviesList: React.FC<IProps> = ({ movies }) => {
   return (
-    <ul>
+    <ul className={styles.list}>
       {movies?.map((movie) => (
-        <li key={movie.id}>{movie.title}</li>
+        <MovieCard key={movie.id} movie={movie} />
       ))}
     </ul>
   );

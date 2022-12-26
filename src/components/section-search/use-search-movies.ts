@@ -4,9 +4,7 @@ import { AppContext } from "../../context";
 import { IMovie } from "../../models/movie";
 import { IMoviesPage } from "../../models/movies-page";
 import { ISearchMoviesResponse } from "../../models/search-movies-response";
-
-const DOMAIN = "https://api.themoviedb.org";
-const GET_QUERY_MOVIES_URL = `${DOMAIN}/3/search/movie`;
+import { TmdbConstants } from "../../models/tmdb-constants";
 
 export const useSearchMovies = (hasReachedEndOfPage: boolean) => {
   const { state } = useContext(AppContext);
@@ -17,7 +15,7 @@ export const useSearchMovies = (hasReachedEndOfPage: boolean) => {
     queryKey,
   }): Promise<IMoviesPage> => {
     const query = queryKey[1] as string;
-    const url = new URL(GET_QUERY_MOVIES_URL);
+    const url = new URL(`${TmdbConstants.apiDomain}${TmdbConstants.apiSearchMoviesPath}`);
     url.searchParams.append("page", pageParam);
     url.searchParams.append("query", query);
     url.searchParams.append("api_key", process.env.REACT_APP_API_KEY as string);
@@ -28,6 +26,7 @@ export const useSearchMovies = (hasReachedEndOfPage: boolean) => {
       movies: data.results.map((r) => ({
         id: r.id,
         title: r.title,
+        posterPath: r.poster_path
       })),
       totalPages: data.total_pages,
       totalResults: data.total_results,

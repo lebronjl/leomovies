@@ -12,9 +12,9 @@ describe("useSearchMovies", () => {
   const response: ISearchMoviesResponse = {
     page: 1,
     results: [
-      { id: 1, title: "Movie 1" },
-      { id: 1, title: "Movie 1" },
-      { id: 2, title: "Movie 2" },
+      { id: 1, title: "Movie 1", poster_path: "posterMovie1.png" },
+      { id: 1, title: "Movie 1", poster_path: "posterMovie1.png" },
+      { id: 2, title: "Movie 2", poster_path: "posterMovie2.png" },
     ] as IMovieResponse[],
     total_pages: 2,
     total_results: 2,
@@ -43,8 +43,8 @@ describe("useSearchMovies", () => {
         ) as jest.Mock
       );
     const expectedResult: IMovie[] = [
-      { id: 1, title: "Movie 1" },
-      { id: 2, title: "Movie 2" },
+      { id: 1, title: "Movie 1", posterPath: "posterMovie1.png" },
+      { id: 2, title: "Movie 2", posterPath: "posterMovie2.png" },
     ];
 
     const { result } = renderHook(() => useSearchMovies(false), {
